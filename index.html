@@ -32,20 +32,20 @@
         // Update light positions relative to the canvas size
         function updateLightPositions() {
             lightsTop = Array.from({ length: lightCount }, (_, i) => ({
-                x: (canvas.width / (lightCount + 90)) * (i + 1) + 875,
-                y: canvas.height / 2.3, // Set to a position relative to the canvas
+                x: (canvas.width / (lightCount + 65)) * (i + 1) + 820,
+                y: canvas.height / 2.4, // Set to a position relative to the canvas
                 color: getRandomColor(),
             }));
 
             lightsBottom = Array.from({ length: lightCount }, (_, i) => ({
-                x: (canvas.width / (lightCount + 90)) * (i + 1) + 1000,
-                y: canvas.height / 10, // Set lower in the canvas
+                x: (canvas.width / (lightCount + 65)) * (i + 1) + 1000,
+                y: canvas.height / 300, // Set lower in the canvas
                 color: getRandomColor(),
             }));
 
             lightsHorizontal = Array.from({ length: lightCount }, (_, i) => ({
-                x: (canvas.width / (lightCount + 125)) * (i + 1) + 600,
-                y: canvas.height / 1.8,  // Position horizontally in the middle
+                x: (canvas.width / (lightCount + 100)) * (i + 1) + 500,
+                y: canvas.height / 1.73,  // Position horizontally in the middle
                 color: getRandomColor(),
             }));
         }
