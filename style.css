@@ -12,6 +12,21 @@ body {
   background-color: #041a31; /* Fallback color if image is not loaded */
 }
 
+#textBox {
+  position: absolute;
+  top: 70px;
+  left: 140px;
+  text-align: center;
+  background-color: rgba(213, 86, 86, 0.8);
+  padding: 10px;
+  border: 5px solid #e35050;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 50px;
+  color: #e4cd68;
+}
+
 canvas {
   display: block;
 }
+
