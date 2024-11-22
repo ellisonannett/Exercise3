@@ -1,0 +1,17 @@
+/* styles.css */
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-image: url('images/house.svg'); /* Add the path to your background image here */
+  background-size: cover; /* Ensure the image covers the entire background */
+  background-position: center; /* Center the background image */
+  background-color: #041a31; /* Fallback color if image is not loaded */
+}
+
+canvas {
+  display: block;
+}
