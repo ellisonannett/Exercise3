@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christmas Lights on House</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,67 +15,67 @@
     <script>
         const canvas = document.getElementById('lightsCanvas');
         const ctx = canvas.getContext('2d');
-        const colors = ["red", "green", "blue", "yellow", "pink"];
+        const colorPatterns = [
+            ["red", "green", "blue", "yellow", "pink"],
+            ["purple", "orange", "cyan", "white", "lime"],
+            ["red", "green", "red", "green", "red", "green"],
+            ["white", "white", "white", "gold", "silver"],
+            ["#FFB6C1", "#FF69B4", "#FF1493", "#C71585", "#DB7093"],
+        ];
         const lightCount = 20;
+        let currentPatternIndex = 0;
 
-        // Set a fixed canvas size
-        canvas.width = 2000;  // Fixed width
-        canvas.height = 600; // Fixed height
+        canvas.width = 2000;
+        canvas.height = 600;
 
-        // Lights arrays
         let lightsTop, lightsBottom, lightsHorizontal;
 
-        // Function to get a random color
-        function getRandomColor() {
-            return colors[Math.floor(Math.random() * colors.length)];
+        function getNextColorPattern() {
+            currentPatternIndex = (currentPatternIndex + 1) % colorPatterns.length;
+            return colorPatterns[currentPatternIndex];
         }
 
-        // Update light positions relative to the canvas size
+
         function updateLightPositions() {
+            const pattern = getNextColorPattern();
             lightsTop = Array.from({ length: lightCount }, (_, i) => ({
                 x: (canvas.width / (lightCount + 65)) * (i + 1) + 820,
-                y: canvas.height / 2.4, // Set to a position relative to the canvas
-                color: getRandomColor(),
+                y: canvas.height / 2.4,
+                color: pattern[i % pattern.length],
             }));
 
             lightsBottom = Array.from({ length: lightCount }, (_, i) => ({
                 x: (canvas.width / (lightCount + 65)) * (i + 1) + 1000,
-                y: canvas.height / 300, // Set lower in the canvas
-                color: getRandomColor(),
+                y: canvas.height / 300,
+                color: pattern[i % pattern.length],
             }));
 
             lightsHorizontal = Array.from({ length: lightCount }, (_, i) => ({
                 x: (canvas.width / (lightCount + 100)) * (i + 1) + 500,
-                y: canvas.height / 1.73,  // Position horizontally in the middle
-                color: getRandomColor(),
+                y: canvas.height / 1.73,
+                color: pattern[i % pattern.length],
             }));
         }
 
-        // Draw the lights
         function drawLights() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw the top string at an angle
-            drawLightString(lightsTop, -Math.PI / 4.77); // Tilt up
+            drawLightString(lightsTop, -Math.PI / 4.77);
 
-            // Draw the bottom string at an opposite angle
-            drawLightString(lightsBottom, Math.PI / 4.77); // Tilt down
+            drawLightString(lightsBottom, Math.PI / 4.77);
 
-            // Draw the horizontal string of lights
-            drawHorizontalLightString(lightsHorizontal); // Horizontal lights
+            drawHorizontalLightString(lightsHorizontal);
         }
 
         function drawLightString(lights, angle) {
             ctx.save();
 
-            // Rotate the context
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
             ctx.translate(centerX, centerY);
             ctx.rotate(angle);
             ctx.translate(-centerX, -centerY);
 
-            // Draw the string
             ctx.strokeStyle = "white";
             ctx.lineWidth = 3;
             ctx.beginPath();
@@ -84,14 +83,12 @@
             ctx.lineTo(lights[lights.length - 1].x, lights[lights.length - 1].y);
             ctx.stroke();
 
-            // Draw the lights
             lights.forEach(({ x, y, color }) => {
                 ctx.fillStyle = color;
                 ctx.beginPath();
                 ctx.ellipse(x, y, 10, 15, 0, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Add highlights
                 ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
                 ctx.beginPath();
                 ctx.ellipse(x - 4, y - 6, 5, 8, -0.5, 0, Math.PI * 2);
@@ -104,7 +101,6 @@
         function drawHorizontalLightString(lights) {
             ctx.save();
 
-            // Draw the horizontal string (no rotation)
             ctx.strokeStyle = "white";
             ctx.lineWidth = 3;
             ctx.beginPath();
@@ -112,14 +108,12 @@
             ctx.lineTo(lights[lights.length - 1].x, lights[lights.length - 1].y);
             ctx.stroke();
 
-            // Draw the lights
             lights.forEach(({ x, y, color }) => {
                 ctx.fillStyle = color;
                 ctx.beginPath();
                 ctx.ellipse(x, y, 10, 15, 0, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Add highlights
                 ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
                 ctx.beginPath();
                 ctx.ellipse(x - 4, y - 6, 5, 8, -0.5, 0, Math.PI * 2);
@@ -129,17 +123,13 @@
             ctx.restore();
         }
 
-        // Handle spacebar for random colors
         document.addEventListener('keydown', (e) => {
             if (e.code === "Space") {
-                lightsTop.forEach(light => (light.color = getRandomColor()));
-                lightsBottom.forEach(light => (light.color = getRandomColor()));
-                lightsHorizontal.forEach(light => (light.color = getRandomColor()));
+                updateLightPositions();
                 drawLights();
             }
         });
 
-        // Initialize
         updateLightPositions();
         drawLights();
     </script>
